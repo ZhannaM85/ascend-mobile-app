@@ -1,21 +1,17 @@
-// App.tsx
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { PaperProvider } from 'react-native-paper';
+
+import { RootNavigator } from './src/navigation/RootNavigator';
+import { theme } from './src/theme/theme';
+import { useWishesStore } from './src/features/wishes/wishesStore';
 
 export default function App() {
+    const wishesStore = useWishesStore();
+
     return (
-        <View style={styles.container}>
-            <Text>Hello from Ascend mobile!</Text>
+        <PaperProvider theme={theme}>
             <StatusBar style="auto" />
-        </View>
+            <RootNavigator wishesStore={wishesStore} />
+        </PaperProvider>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
