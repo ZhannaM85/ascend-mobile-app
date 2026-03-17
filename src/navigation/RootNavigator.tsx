@@ -7,6 +7,7 @@ import { WishesListScreen } from '../screens/WishesListScreen';
 import { CreateWishScreen } from '../screens/CreateWishScreen';
 import { WishDetailsScreen } from '../screens/WishDetailsScreen';
 import { EditWishScreen } from '../screens/EditWishScreen';
+import { AboutScreen } from '../screens/AboutScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -45,6 +46,9 @@ export function RootNavigator({ wishesStore }: RootNavigatorProps) {
                             }}
                         />
                     )}
+                </Stack.Screen>
+                <Stack.Screen name="About">
+                    {(props) => <AboutScreen {...props} />}
                 </Stack.Screen>
                 <Stack.Screen name="EditWish">
                     {(props) => (

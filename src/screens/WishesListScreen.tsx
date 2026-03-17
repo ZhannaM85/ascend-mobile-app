@@ -1,6 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { Appbar, Button, List, Text } from 'react-native-paper';
+import { Appbar, Button, FAB, List, Text } from 'react-native-paper';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { RootStackParamList } from '../navigation/types';
 import type { Wish } from '../features/wishes/types';
@@ -11,15 +12,12 @@ export type WishesListScreenProps = NativeStackScreenProps<RootStackParamList, '
 };
 
 export function WishesListScreen({ navigation, wishes }: WishesListScreenProps) {
+    const insets = useSafeAreaInsets();
+
     return (
         <View style={styles.container}>
             <Appbar.Header>
                 <Appbar.Content title="Wishes" />
-                <Appbar.Action
-                    icon="plus"
-                    accessibilityLabel="Create wish"
-                    onPress={() => navigation.navigate('CreateWish')}
-                />
             </Appbar.Header>
 
             {wishes.length === 0 ? (
@@ -68,6 +66,28 @@ export function WishesListScreen({ navigation, wishes }: WishesListScreenProps) 
                     }}
                 />
             )}
+
+            <View
+                style={[
+                    styles.fabContainer,
+                    { bottom: insets.bottom + 16, right: 16 },
+                ]}
+            >
+                <FAB
+                    icon="cog"
+                    size="small"
+                    style={styles.fab}
+                    onPress={() => navigation.navigate('About')}
+                    accessibilityLabel="Settings"
+                />
+                <FAB
+                    icon="plus"
+                    size="small"
+                    style={styles.fab}
+                    onPress={() => navigation.navigate('CreateWish')}
+                    accessibilityLabel="Create wish"
+                />
+            </View>
         </View>
     );
 }
@@ -88,6 +108,15 @@ const styles = StyleSheet.create({
     cta: {
         marginTop: 8,
         alignSelf: 'flex-start',
+    },
+    fabContainer: {
+        position: 'absolute',
+        flexDirection: 'row',
+        gap: 12,
+        alignItems: 'center',
+    },
+    fab: {
+        margin: 0,
     },
 });
 

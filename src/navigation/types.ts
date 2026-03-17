@@ -3,5 +3,6 @@ export type RootStackParamList = {
     CreateWish: undefined;
     WishDetails: { id: string };
     EditWish: { id: string };
+    About: undefined;
 };
 
