@@ -27,4 +27,3 @@ npm run start
 
 You can develop on Windows and produce iOS builds using **Expo cloud builds (EAS Build)**.
 Local iOS Simulator requires macOS.
-
