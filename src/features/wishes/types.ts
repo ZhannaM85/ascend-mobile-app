@@ -2,6 +2,8 @@ export type WishCommitment = {
     title: string;
     durationDays: number;
     startDateIso?: string;
+    /** Start-of-day timestamps (ms) for checked-in days. */
+    checkIns?: number[];
 };
 
 export type Wish = {

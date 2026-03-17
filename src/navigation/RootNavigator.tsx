@@ -5,6 +5,7 @@ import type { RootStackParamList } from './types';
 import type { WishesStore } from '../features/wishes/wishesStore';
 import { WishesListScreen } from '../screens/WishesListScreen';
 import { CreateWishScreen } from '../screens/CreateWishScreen';
+import { WishDetailsScreen } from '../screens/WishDetailsScreen';
 import { EditWishScreen } from '../screens/EditWishScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -19,6 +20,15 @@ export function RootNavigator({ wishesStore }: RootNavigatorProps) {
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Wishes">
                     {(props) => <WishesListScreen {...props} wishes={wishesStore.wishes} />}
+                </Stack.Screen>
+                <Stack.Screen name="WishDetails">
+                    {(props) => (
+                        <WishDetailsScreen
+                            {...props}
+                            wish={wishesStore.getById(props.route.params.id)}
+                            onCheckIn={wishesStore.checkIn}
+                        />
+                    )}
                 </Stack.Screen>
                 <Stack.Screen name="CreateWish">
                     {(props) => (

@@ -4,6 +4,7 @@ import { Appbar, Button, List, Text } from 'react-native-paper';
 
 import type { RootStackParamList } from '../navigation/types';
 import type { Wish } from '../features/wishes/types';
+import { formatStreakSummary } from '../features/wishes/commitmentUtils';
 
 export type WishesListScreenProps = NativeStackScreenProps<RootStackParamList, 'Wishes'> & {
     wishes: Wish[];
@@ -39,16 +40,32 @@ export function WishesListScreen({ navigation, wishes }: WishesListScreenProps) 
                 <FlatList
                     data={wishes}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <List.Item
-                            title={item.title}
-                            description={item.description}
-                            left={(props) => <List.Icon {...props} icon="star-outline" />}
-                            right={(props) => <List.Icon {...props} icon="chevron-right" />}
-                            onPress={() => navigation.navigate('EditWish', { id: item.id })}
-                            accessibilityRole="button"
-                        />
-                    )}
+                    renderItem={({ item }) => {
+                        const descParts: string[] = [];
+                        if (item.description) descParts.push(item.description);
+                        if (item.commitment) {
+                            descParts.push(formatStreakSummary(item.commitment));
+                        }
+                        const description = descParts.join(' · ');
+                        return (
+                            <List.Item
+                                title={item.title}
+                                description={description || undefined}
+                                left={(props) => (
+                                    <List.Icon {...props} icon="star-outline" />
+                                )}
+                                right={(props) => (
+                                    <List.Icon {...props} icon="chevron-right" />
+                                )}
+                                onPress={() =>
+                                    navigation.navigate('WishDetails', {
+                                        id: item.id,
+                                    })
+                                }
+                                accessibilityRole="button"
+                            />
+                        );
+                    }}
                 />
             )}
         </View>
